@@ -49,10 +49,26 @@ def registrar_horas_semana():
     print(f"Total de horas trabalhadas de Segunda a Sexta: {formatar_timedelta(total_horas_trabalhadas)}")
     return total_horas_trabalhadas
 
+def exibir_resultado_sabado(total_horas_trabalhadas):
+    horas_restantes = CARGA_HORARIA_SEMANAL_TOTAL - total_horas_trabalhadas
+
+    print("\n--- Cálculo para o Sábado ---")
+    if horas_restantes <= timedelta(0):
+        print("🎉 Parabéns! Você já completou sua carga horária de 20 horas durante a semana.")
+        print("Você não precisa trabalhar no sábado para cumprir a meta.")
+    else:
+        horario_saida = HORA_INICIO_SABADO + horas_restantes
+        print(f"Você precisa cumprir {formatar_timedelta(horas_restantes)} no sábado.")
+        print("\n=======================================================")
+        print(f"  Para completar as 20h, no sábado você deve sair às: {horario_saida.strftime('%H:%M')}")
+        print("=======================================================")
+
 def main():
     print("--- Calculadora de Carga Horária Semanal ---")
     print(f"Objetivo: Completar {CARGA_HORARIA_SEMANAL_TOTAL.total_seconds() / 3600:.0f} horas semanais.\n")
-    registrar_horas_semana()
+    
+    horas_da_semana = registrar_horas_semana()
+    exibir_resultado_sabado(horas_da_semana)
 
 if __name__ == "__main__":
     main()
